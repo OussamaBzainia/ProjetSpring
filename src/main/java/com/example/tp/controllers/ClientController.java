@@ -2,11 +2,13 @@ package com.example.tp.controllers;
 
 
 import com.example.tp.entities.Client;
+import com.example.tp.entities.Facture;
 import com.example.tp.repositories.IClientRepository;
 import com.example.tp.services.IClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -38,6 +40,18 @@ public class ClientController {
     @GetMapping("/retrieveClient/{id}")
     public Client retrieveClient(@PathVariable Long id){
         return iClientService.retrieveClient(id);
+    }
+
+    @GetMapping("/getFacturesByClient/{idClient}")
+    public List<Facture> getFacturesByClient(@PathVariable Long idClient){
+
+        return iClientService.getFacturesByClient(idClient);
+    }
+
+    @GetMapping ("/{categorieClient}/{startDate}/{endDate}")
+    public float getChiffreAffaireParCategorieClient(@PathVariable(value = "categorieClient") CategorieClient categorieClient,@PathVariable(value = "startDate") Date startDate,@PathVariable(value = "endDate") Date endDate)
+    {
+        return iClientService.getChiffreAffaireParCategorieClient(categorieClient,startDate,endDate);
     }
 }
 

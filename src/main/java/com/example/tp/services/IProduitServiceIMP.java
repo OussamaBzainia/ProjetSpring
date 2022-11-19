@@ -1,8 +1,10 @@
 package com.example.tp.services;
 
+import com.example.tp.entities.Fournisseur;
 import com.example.tp.entities.Produit;
 import com.example.tp.entities.Rayon;
 import com.example.tp.entities.Stock;
+import com.example.tp.repositories.IFournisseurRepository;
 import com.example.tp.repositories.IProduitRepository;
 import com.example.tp.repositories.IRayonRepository;
 import com.example.tp.repositories.IStockRepository;
@@ -19,6 +21,8 @@ public class IProduitServiceIMP implements IProduitService{
     IRayonRepository  iRayonRepository;
     @Autowired
     IStockRepository iStockRepository;
+    @Autowired
+    IFournisseurRepository iFournisseurRepository;
 
     @Override
     public List<Produit> retrieveAllProduits() {
@@ -54,5 +58,16 @@ public class IProduitServiceIMP implements IProduitService{
             iProduitRepository.save(produit);
         }
 
+    }
+
+    @Override
+    public void assignFournisseurToProduit(Long fournisseurId, Long produitId) {
+        Fournisseur fournisseur=iFournisseurRepository.findById(fournisseurId).orElse(null);
+        Produit produit=iProduitRepository.findById(produitId).orElse(null);
+
+        if(fournisseur != null && produit != null){
+            produit.setFournisseurs((List<Fournisseur>) fournisseur);
+            iProduitRepository.save(produit);
+        }
     }
 }

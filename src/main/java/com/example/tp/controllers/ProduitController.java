@@ -31,4 +31,9 @@ public class ProduitController {
     public void assignProduitToStock(@PathVariable Long idProduit,@PathVariable Long idStock){
         iProduitService.assignProduitToStock(idProduit,idStock);
     }
+
+    @PutMapping("/assignFournisseurToProduit/{fournisseurId}/{produitId}")
+    public void assignFournisseurToProduit(@PathVariable Long fournisseurId,@PathVariable Long produitId){
+        iProduitService.assignFournisseurToProduit(fournisseurId,produitId);
+    }
 }
